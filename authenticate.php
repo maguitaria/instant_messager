@@ -41,3 +41,15 @@ if (isset($_POST['password']) && $account['role'] == 'Operator') {
     update_secret($pdo, $account['id'], $account['email']);
     exit('Success');
 }
+$stmt = $pdo->prepare('INSERT INTO accounts (email, password, full_name, role, last_seen) VALUES (?, ?, ?, ?, ?)');
+$stmt->execute([$_POST['email'], '', $_POST['name'] ? $_POST['name'] : 'Guest', 'Guest', date('Y-m-d H:i:s')]);
+// Retrieve the account ID
+$id = $pdo->lastInsertId();
+// Authenticate the new user
+$_SESSION['account_loggedin'] = TRUE;
+$_SESSION['account_id'] = $id;
+$_SESSION['account_role'] = 'Guest';
+// Update secret code
+update_secret($pdo, $id, $_POST['email']);
+// Output: success
+exit('success');
