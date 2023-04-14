@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS `accounts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `full_name` varchar(255) NOT NULL,
+  `role` enum('Guest','Operator') NOT NULL,
+  `secret` varchar(255) NOT NULL DEFAULT '',
+  `last_seen` datetime NOT NULL,
+  `status` enum('Occupied','Waiting','Idle') NOT NULL DEFAULT 'Idle',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
